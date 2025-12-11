@@ -1,3 +1,5 @@
-# Template
+# Setting Methods
 
-for mentoring
+["Tanstack Router"](./docs/tanstack-router.md)
+
+["Axios"](./docs/axios.md)

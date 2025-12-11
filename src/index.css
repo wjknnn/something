@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 :root {
-  @apply flex w-full h-full;
+  @apply flex w-full h-full text-[16px];
 
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 
@@ -13,6 +13,14 @@
 
 body {
   @apply min-h-dvh w-full m-0 p-0 flex;
+}
+
+#root {
+  @apply flex w-full h-full;
+}
+
+button {
+  @apply px-2 py-1.5 bg-zinc-100 border border-zinc-300 rounded-lg cursor-pointer hover:bg-zinc-200/80 transition-colors font-medium select-none;
 }
 
 @theme {
