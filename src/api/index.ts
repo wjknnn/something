@@ -26,10 +26,12 @@ instance.interceptors.response.use(
     if (error.response) {
       const { status } = error.response
 
+      console.log(status)
+
       if (status === 401) {
         alert('로그인이 만료되었어요!!')
         removeAccessToken()
-        // window.location.href = '/login';
+        window.location.href = '/login'
       }
 
       if (status >= 500) console.error('서버가 아파요!!')

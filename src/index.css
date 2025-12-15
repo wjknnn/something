@@ -19,9 +19,5 @@ body {
   @apply flex w-full h-full;
 }
 
-button {
-  @apply px-2 py-1.5 bg-zinc-100 border border-zinc-300 rounded-lg cursor-pointer hover:bg-zinc-200/80 transition-colors font-medium select-none;
-}
-
 @theme {
 }
