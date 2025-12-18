@@ -25,6 +25,7 @@ function RouteComponent() {
         setAccessToken(res.data.accessToken)
         navigate({ to: '/my' })
       })
+      .catch(() => alert('로그인에 실패했습니다.'))
   }
 
   return (

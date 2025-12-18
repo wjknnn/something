@@ -18,6 +18,8 @@ type ListRes = {
   userId: number
 }
 
+type User = { id: number; nickname: string; code: string }
+
 export const Route = createFileRoute('/my')({
   beforeLoad: () => {
     if (!getAccessToken()) throw redirect({ to: '/' })
@@ -28,6 +30,11 @@ export const Route = createFileRoute('/my')({
 function RouteComponent() {
   const [inputValue, setInputValue] = useState<string>('')
   const [list, setList] = useState<List[]>([])
+  const [myCode, setMyCode] = useState<string>('')
+
+  const getMyCode = () => {
+    instance.get<User>('/user').then((res) => setMyCode(res.data.code))
+  }
 
   const getList = () => {
     instance.get<ListRes[]>('/todo/list').then((res) => {
@@ -57,11 +64,20 @@ function RouteComponent() {
 
   useEffect(() => {
     getList()
+    getMyCode()
   }, [])
 
   return (
     <div className="flex justify-center px-5 py-10">
       <div className="flex flex-col max-w-[400px] w-full gap-10">
+        <Button
+          variant="secondary"
+          onClick={() => {
+            navigator.clipboard.writeText(`${location.origin}/list/${myCode}`)
+          }}
+        >
+          내 Todo List 공유하기
+        </Button>
         <div className="flex flex-col gap-2">
           <Input
             label="할 일 입력"

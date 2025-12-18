@@ -1,5 +1,7 @@
 import instance from '@/api'
-import { createFileRoute } from '@tanstack/react-router'
+import { Button } from '@/components/Button'
+import { Input } from '@/components/Input'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 
 export const Route = createFileRoute('/signup')({
@@ -12,47 +14,59 @@ function RouteComponent() {
   const [id, setId] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
+  const navigate = useNavigate()
+
   const onSubmit = () => {
-    instance.post('/auth/sign-up', {
-      nickname: name,
-      email: email,
-      loginId: id,
-      password: password,
-    })
+    instance
+      .post('/auth/sign-up', {
+        nickname: name,
+        email: email,
+        loginId: id,
+        password: password,
+      })
+      .then(() => {
+        navigate({ to: '/login' })
+      })
+      .catch(() => alert('회원가입에 실패했습니다.'))
   }
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        onSubmit()
-      }}
-      className="flex flex-col px-4 gap-2"
-    >
-      <label>이름</label>
-      <input value={name} onChange={(e) => setName(e.target.value)} required />
-      <label>이메일</label>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <label>아이디</label>
-      <input
-        type="id"
-        value={id}
-        onChange={(e) => setId(e.target.value)}
-        required
-      />
-      <label>비밀번호</label>
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button>회원가입 하기</button>
-    </form>
+    <div className="flex w-full h-full justify-center items-center px-5">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          onSubmit()
+        }}
+        className="flex flex-col gap-3 max-w-[320px] w-full"
+      >
+        <h1 className="text-[28px] font-semibold text-center mb-2">회원가입</h1>
+        <Input
+          label="이름"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <Input
+          label="이메일"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <Input
+          label="아이디"
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+          required
+        />
+        <Input
+          label="비밀번호"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <Button className="mt-5">회원가입 하기</Button>
+      </form>
+    </div>
   )
 }

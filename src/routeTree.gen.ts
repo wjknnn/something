@@ -13,6 +13,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as MyRouteImport } from './routes/my'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ListUserIdRouteImport } from './routes/list/$userId'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -34,18 +35,25 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ListUserIdRoute = ListUserIdRouteImport.update({
+  id: '/list/$userId',
+  path: '/list/$userId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/my': typeof MyRoute
   '/signup': typeof SignupRoute
+  '/list/$userId': typeof ListUserIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/my': typeof MyRoute
   '/signup': typeof SignupRoute
+  '/list/$userId': typeof ListUserIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/my': typeof MyRoute
   '/signup': typeof SignupRoute
+  '/list/$userId': typeof ListUserIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/my' | '/signup'
+  fullPaths: '/' | '/login' | '/my' | '/signup' | '/list/$userId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/my' | '/signup'
-  id: '__root__' | '/' | '/login' | '/my' | '/signup'
+  to: '/' | '/login' | '/my' | '/signup' | '/list/$userId'
+  id: '__root__' | '/' | '/login' | '/my' | '/signup' | '/list/$userId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MyRoute: typeof MyRoute
   SignupRoute: typeof SignupRoute
+  ListUserIdRoute: typeof ListUserIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/list/$userId': {
+      id: '/list/$userId'
+      path: '/list/$userId'
+      fullPath: '/list/$userId'
+      preLoaderRoute: typeof ListUserIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MyRoute: MyRoute,
   SignupRoute: SignupRoute,
+  ListUserIdRoute: ListUserIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
